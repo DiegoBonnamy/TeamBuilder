@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TeamBuilder{% endblock %}
+
+{% block body %}
+
+<h1>Team Builder</h1>
+
+<div class="row">
+
+    <!-- TEAM -->
+    <div class="col-8 bg-light" style="border-radius:25px; padding:15px;">
+
+        <!-- FORM -->
+        <h3>Ajouter une équipe</h3>
+        {{ form_start(form_team) }}
+            {{ form_widget(form_team) }}
+            <br/>
+            <button class="btn btn-success btn-block" style="border-radius:25px;"><i class="fas fa-plus"></i></button>
+        {{ form_end(form_team) }}
+
+        <hr>
+
+        <!-- DISPLAY -->
+        {% for team in teams %}
+
+            <b>{{ team.name }}</b>
+            <a href="{{ path('remove_team', {'id': team.id}) }}" class="btn btn-danger" style="border-radius:25px;"><i class="fas fa-trash"></i></a>
+
+            <table class="table" style="margin-top:25px;">
+                <thead>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                </thead>
+                <tbody>
+                    {% for person in team.persons %}
+                        <tr>
+                            <td>{{ person.name }}</td>
+                            <td>{{ person.surname }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">Equipe vide</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Auncune équipe</p>
+        {% endfor %}
+
+    </div>
+
+    <!-- PERSON -->
+    <div class="col-4 bg-light" style="border-radius:25px; padding:15px;">
+
+        <!-- FORM -->
+        <h3>Ajouter une personne</h3>
+        {{ form_start(form_person) }}
+            {{ form_widget(form_person) }}
+            <br/>
+            <button class="btn btn-success btn-block" style="border-radius:25px;"><i class="fas fa-plus"></i></button>
+        {{ form_end(form_person) }}
+
+        <hr>
+
+        <!-- DISPLAY -->
+        {% for person in persons %}
+
+            <b>{{ person.surname }} {{ person.name }}</b>
+            <a href="{{ path('remove_person', {'id': person.id}) }}" class="btn btn-danger" style="border-radius:25px;"><i class="fas fa-trash"></i></a>
+
+        {% else %}
+            <p>Auncune personne</p>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
